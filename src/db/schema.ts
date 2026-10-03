@@ -21,8 +21,10 @@ export const albums = mysqlTable("albums", {
 export const tracks = mysqlTable("tracks", {
     id: int("id").primaryKey().autoincrement(),
     title: varchar("title", { length: 255 }).notNull(),
-    albumId: int("album_id").notNull().references(() => albums.id),
-    duration: int("duration").notNull(),
+    fileObjectKey: varchar("file_object_key", { length: 255 }).notNull(),
+    fileHash: varchar("file_hash", { length: 64 }).notNull().unique(),
+    albumId: int("album_id").references(() => albums.id).notNull(),
+    duration: int("duration"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
